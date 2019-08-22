@@ -1,59 +1,74 @@
-
-body{
+body {
     padding: 0px;
     margin: 0px;
 }
+
 * {
     margin: 0;
     padding: 0;
 }
-li{
+
+li {
     list-style: none;
 }
-.container{
+
+.container {
     display: flex;
     flex-direction: row;
     width: 100%;
 }
-.left-nav{
+
+.left-nav {
     width: 16%;
     background-color: #eee;
     height: 1000px;
     padding: 20px 20px 20px 40px;
 }
 
-.left-nav ul{
+.left-nav ul {
     font-size: 18px;
     padding-left: 0px;
 }
-.left-nav li{
+
+.left-nav li {
     padding-left: 30px;
-    background: url('./assets/logo.svg')  no-repeat -5px center
+    background: url('./assets/logo.svg') no-repeat -5px center
 }
-.head-nav ul{
+
+.head-nav ul {
     display: flex;
     flex-direction: row;
     align-items: center;
     margin-bottom: 0;
     padding-left: 10px;
 }
-.head-nav li+li{
+
+.head-nav li+li {
     padding-left: 30px;
 }
-.right-main{
+
+.right-main {
     width: 84%;
-    height:1000px;
+    height: 1000px;
     background-color: #fff;
     padding: 30px 20px 20px 30px;
 }
 
-.head-nav{
+.head-nav {
     padding: 20px 10px;
     background-color: rgb(205, 224, 245);
 }
-.container a:hover{
+
+.container a:hover {
     color: #1DA57A;
 }
-.active-nav{
+
+.active-nav {
     color: #1DA57A;
+}
+.ant-menu-dark .ant-menu-item a {
+    color: rgba(255, 255, 255, 0.65);
+}
+.ant-menu-dark .ant-menu-item-selected a,.ant-menu-dark .ant-menu-item-active a{
+    color: white;
 }
