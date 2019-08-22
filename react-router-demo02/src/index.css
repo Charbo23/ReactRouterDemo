@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+html{
+    font-size: 14px;
+}
+#root {
+    padding: 1rem 1.2rem 3rem;
+}
+
+.input-group {
+    padding-bottom: 1rem;
+}
+@media screen and (min-width: 1088px) {
+    html{
+        font-size: 23px;
+    }
+    .list{
+        max-width: 80vw;
+    }
+}
