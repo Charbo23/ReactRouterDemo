@@ -1,27 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
-import {errorNotify} from '../Notify';
-import {Link,Route} from 'react-router-dom';
-
+import { errorNotify } from '../Notify';
+import { Link } from 'react-router-dom';
 class Index extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            list: [
-                // {
-                //     "cid": "rFCFvY3kM",
-                //     "title": "CBLog-1"
-                // },
-                // {
-                //     "cid": "4ELAZY1DH",
-                //     "title": "CBLog-2"
-                // },
-                // {
-                //     "cid": "MXzC48xk0",
-                //     "title": "CBLog-3"
-                // }
-            ]
-        }
+            list: []
+        };
+        this.props.history.push('/home');
     }
     render() {
         return (
@@ -42,14 +29,21 @@ class Index extends Component {
         );
     }
     componentDidMount() {
+        this._isMounted=true;
         axios.get('https://www.easy-mock.com/mock/5d5dfa81db64d40498f8fec2/ReduxRouterDemo/list')
             .then(response => {
-                this.setState({ list: response.data.data.list })
+                if(this._isMounted){
+                    this.setState({ list: response.data.data.list })
+                }else{
+                    console.log('setState Canceled ');
+                }
             })
             .catch(error => {
-               errorNotify('获取数据失败', error.message);
-
+                errorNotify('获取数据失败', error.message);
             });
+    }
+    componentWillUnmount(){
+        this._isMounted=false;
     }
 }
 

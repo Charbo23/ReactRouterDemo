@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Index from './pages/Index';
 import About from './pages/About';
 import List from './pages/List';
-
+import Home from './pages/Home';
 function AppRouter() {
     return (
         <Router>
@@ -13,8 +13,9 @@ function AppRouter() {
                 <li><Link to='/about/charbo'>关于</Link></li>
             </ul>
             <Route path='/' exact component={Index} />
+            <Route path='/home' component={Home} />
             <Route path='/list/:id' component={List} />
-            <Route path='/about/:id' component={About} /> {/* 不加exact即可匹配/about/xxx这样的路径 */}
+            <Route path='/about/:id' component={About} />
         </Router>
     )
 }
