@@ -20,9 +20,7 @@ const TodoListUI = (props) => {
                 <Button
                     type='primary'
                     onClick={addItem}
-                    className={antdStyle['ant-btn']}
                 >增加</Button>
-                <div className={antdStyle['donut']}></div>
             </div>
             <div className='list'>
                 <List

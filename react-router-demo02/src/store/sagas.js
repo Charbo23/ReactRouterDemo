@@ -3,7 +3,7 @@ import { takeEvery, put, take, call, takeLeading, takeLatest } from 'redux-saga/
 import axios from "axios";
 import * as types from './actionTypes';
 import actions from './actionCreators';
-import { errorNotify } from '../Notify';
+import { errorNotify } from '../utils/Notify';
 
 function* mySagas() {
     // yield takeEvery(types.CHANGE_INPUT, changeInput);
