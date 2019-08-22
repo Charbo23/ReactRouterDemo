@@ -28,12 +28,12 @@ class Index extends Component {
         );
     }
     componentDidMount() {
-        this._isMounted=true;
+        this._isMounted = true;
         axios.get('https://www.easy-mock.com/mock/5d5dfa81db64d40498f8fec2/ReduxRouterDemo/list')
             .then(response => {
-                if(this._isMounted){
+                if (this._isMounted) {
                     this.setState({ list: response.data.data.list })
-                }else{
+                } else {
                     console.log('setState Canceled ');
                 }
             })
@@ -41,8 +41,8 @@ class Index extends Component {
                 errorNotify('获取数据失败', error.message);
             });
     }
-    componentWillUnmount(){
-        this._isMounted=false;
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 }
 

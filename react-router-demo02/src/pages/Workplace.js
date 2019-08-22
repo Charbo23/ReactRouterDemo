@@ -1,15 +1,15 @@
-import React from 'react';
-import {Route,Link} from 'react-router-dom';
+import React,{Fragment} from 'react';
+import {Route,NavLink} from 'react-router-dom';
 import GetUp from './workplace/GetUp';
 import Salary from './workplace/Salary';
 
 function Workplace(){
     return (
-        <div>
+        <Fragment>
             <div className="head-nav">
                 <ul>
-                    <li><Link to="/workplace/get-up">程序员早起攻略详情</Link></li>
-                    <li><Link to="/workplace/salary">程序员加薪攻略详情</Link></li>
+                    <li><NavLink activeClassName="active-nav"  to="/workplace/get-up">程序员早起攻略详情</NavLink></li>
+                    <li><NavLink activeClassName="active-nav"  to="/workplace/salary">程序员加薪攻略详情</NavLink></li>
                 </ul>
             </div>
             <div className="workplace-content">
@@ -17,7 +17,7 @@ function Workplace(){
                 <Route path="/workplace/get-up" component={GetUp}></Route>
                 <Route path="/workplace/salary" component={Salary}></Route>
             </div>
-        </div>
+        </Fragment>
     )
 }
 
