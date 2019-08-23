@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from 'react';
-import {  Route, Link, withRouter,NavLink,Switch } from 'react-router-dom';
+import { Route, Link, withRouter, Switch } from 'react-router-dom';
 import { Layout, Menu, Icon, Breadcrumb } from 'antd';
 import antStyle from './style/antd-style.module.scss';
 import Index from './pages/Index';
 import Video from './pages/Video';
 import Workplace from './pages/Workplace';
+import TodoList from '@/TodoList';
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 const breadcrumbNameMap = {
@@ -12,6 +13,10 @@ const breadcrumbNameMap = {
     '/video': 'Video',
     '/workplace': 'Workplace',
     '/video/react-page': 'React',
+    '/video/vue': 'Vue',
+    '/video/flutter': 'Flutter',
+    '/workplace/get-up':'GetUp',
+    '/workplace/salary':'Salary'
 };
 class AppRouter extends Component {
 
@@ -23,6 +28,7 @@ class AppRouter extends Component {
                 { id: '/', iconType: 'home', path: '/', title: '博客首页', exact: true, hasSub: false, component: Index },
                 { id: '/video', iconType: 'video-camera', path: '/video', title: '视频教程', exact: false, hasSub: true, component: Video },
                 { id: '/workplace', iconType: 'radar-chart', path: '/workplace', title: '职场技能', exact: false, hasSub: true, component: Workplace },
+                { id: '/todolist', iconType: 'file-text', path: '/todolist', title: 'TodoList', exact: false, hasSub: false, component: TodoList },
             ]
         };
         this.toggle = () => {
@@ -30,13 +36,13 @@ class AppRouter extends Component {
                 collapsed: !this.state.collapsed,
             });
         };
-        
+
         this.location = props.location
         this.pathSnippets = this.location.pathname.split('/').filter(i => i);
-        this.curUrl=`/${this.pathSnippets.join('/')}`;
+        this.curUrl = `/${this.pathSnippets.join('/')}`;
         this.extraBreadcrumbItems = this.pathSnippets.map((_, index) => {
             const url = `/${this.pathSnippets.slice(0, index + 1).join('/')}`;
-           
+
             // if(!breadcrumbNameMap[url]){
             //     return null;
             // }
@@ -57,18 +63,18 @@ class AppRouter extends Component {
         this.pathSnippets = this.location.pathname.split('/').filter(i => i);
         this.extraBreadcrumbItems = this.pathSnippets.map((_, index) => {
             const url = `/${this.pathSnippets.slice(0, index + 1).join('/')}`;
-           
+
             // if(!breadcrumbNameMap[url]){
             //     return null;
             // }
-                return (
-                    <Breadcrumb.Item key={url}>
-                        <Link to={url}>{breadcrumbNameMap[url]}</Link>
-                    </Breadcrumb.Item>
-                );
-                
+            return (
+                <Breadcrumb.Item key={url}>
+                    <Link to={url}>{breadcrumbNameMap[url]}</Link>
+                </Breadcrumb.Item>
+            );
+
         });
-        
+
         this.breadcrumbItems = [
             <Breadcrumb.Item key="home">
                 <Link to="/">Home</Link>
@@ -77,46 +83,14 @@ class AppRouter extends Component {
     }
     render() {
         return (
-            // <Router>
-            //     <div className="container">
-            //         <div className="left-nav">
-            //             <h1>一级导航</h1>
-            //             <ul>
-            //                 {
-            //                     this.state.routeConfig.map((item) => {
-
-            //                         return (
-            //                             <li key={item.id}><NavLink exact={item.activeExact} activeClassName="active-nav" to={item.path}>{item.title}</NavLink></li>
-            //                         )
-
-            //                     })
-            //                 }
-            //             </ul>
-            //         </div>
-            //         <div className="right-main">
-            //             {
-            //                 this.state.routeConfig.map((item) => {
-
-            //                     return (
-            //                         <Route key={item.id} path={item.path} exact={item.exact} component={item.component} />
-            //                     )
-
-            //                 })
-            //             }
-            //         </div>
-            //     </div>
-            // </Router>
-
-
-
             <Layout className={antStyle['ant-layout']}>
                 <Sider className={antStyle['ant-sider']} trigger={null} collapsible collapsed={this.state.collapsed}>
                     <div className={antStyle['logo']}><img src={require('./assets/logo-sidebar.svg')} alt="logo" /></div>
-                    <Menu 
-                    theme="dark" 
-                    mode="inline" 
-                    defaultSelectedKeys={[`${this.curUrl}`]}  
-                    defaultOpenKeys={[`parent-${this.curUrl}`]}
+                    <Menu
+                        theme="dark"
+                        mode="inline"
+                        defaultSelectedKeys={[`${this.curUrl}`]}
+                        defaultOpenKeys={[`parent-${this.curUrl}`]}
                     >
                         {
                             this.state.routeConfig.map((item) => {
@@ -124,7 +98,7 @@ class AppRouter extends Component {
                                     return (
 
                                         <SubMenu
-                                            key={"parent-"+item.id}
+                                            key={"parent-" + item.id}
                                             title={
                                                 <Fragment>
                                                     <Icon type={item.iconType} />
@@ -169,15 +143,15 @@ class AppRouter extends Component {
                         </Breadcrumb>
                         <div className={antStyle['ant-layout-content-main']} >
                             <Switch>
-                            {
-                                this.state.routeConfig.map((item) => {
-                                    return (
-                                        <Route key={item.id} path={item.path} exact={item.exact} component={item.component} />
-                                    )
-                                })
-                            }
-                            <Route render={()=><h1>Not Found</h1>}></Route>
-                        </Switch>
+                                {
+                                    this.state.routeConfig.map((item) => {
+                                        return (
+                                            <Route key={item.id} path={item.path} exact={item.exact} component={item.component} />
+                                        )
+                                    })
+                                }
+                                <Route render={() => <h1>Not Found</h1>}></Route>
+                            </Switch>
                         </div>
                     </Content>
                 </Layout>

@@ -1,13 +1,14 @@
 import React from 'react';
-import { Form, Select, InputNumber, DatePicker, Switch, Slider, Input, Button, List, Icon } from 'antd';
+import { Form, Select, InputNumber, DatePicker, Switch, Slider, Input, Button, List, Icon,Row,Col } from 'antd';
 import antdStyle from './style/antd-style.module.scss';
 const { Option } = Select;
 const TodoListUI = (props) => {
     const { loading, inputValue, changeInput, list, addItem, deleteItem } = props;
     return (
-        <div className='container'>
+        <Row>
             
-            <h1 style={{ textAlign: "center" }}>Home Page</h1>
+            <Col xl={12} lg={24}>
+            <h1 style={{ textAlign: "center" }}>TodoList</h1>
             <div className='input-group'>
                 <Input
                     placeholder='Write Something'
@@ -20,6 +21,7 @@ const TodoListUI = (props) => {
                 <Button
                     type='primary'
                     onClick={addItem}
+                    className={antdStyle['ant-btn']}
                 >增加</Button>
             </div>
             <div className='list'>
@@ -48,7 +50,9 @@ const TodoListUI = (props) => {
                     )}
                 />
             </div>
-            <Form style={{ marginTop: 32 }}>
+            </Col>
+            <Col xl={12} lg={24}>
+            <Form style={{ marginTop: 32 }} >
                 <Form.Item
                     label="数字输入框"
                     labelCol={{ span: 8 }}
@@ -102,7 +106,9 @@ const TodoListUI = (props) => {
       </Button>
                 </Form.Item>
             </Form>
-        </div>
+            </Col>
+            
+        </Row>
     );
 };
 const IconText = ({ type, text, handleClick, itemId }) => (

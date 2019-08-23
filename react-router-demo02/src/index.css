@@ -13,11 +13,14 @@ li {
 }
 
 .container {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
+    
 }
-
+.section{
+   
+}
+.input-group {
+    padding-bottom: 1rem;
+}
 .left-nav {
     width: 16%;
     background-color: #eee;

@@ -1,8 +1,10 @@
 .ant-input {
-    max-width: 60vw;
-    margin-right: .6rem;
+    max-width: 85%;
 }
-
+.ant-input + .ant-btn{
+    margin-left: .6rem;
+    
+}
 .ant-main-layout {
     min-height: 100vh;
     // margin-left: 200px;
