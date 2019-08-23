@@ -5,7 +5,8 @@ import antStyle from './style/antd-style.module.scss';
 import Index from './pages/Index';
 import Video from './pages/Video';
 import Workplace from './pages/Workplace';
-import TodoList from '@/TodoList';
+import TodoList from './TodoList';
+import FileUpload from './utils/FileUpload';
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 const breadcrumbNameMap = {
@@ -15,8 +16,10 @@ const breadcrumbNameMap = {
     '/video/react-page': 'React',
     '/video/vue': 'Vue',
     '/video/flutter': 'Flutter',
-    '/workplace/get-up':'GetUp',
-    '/workplace/salary':'Salary'
+    '/workplace/get-up': 'GetUp',
+    '/workplace/salary': 'Salary',
+    '/todolist': 'TodoList',
+    '/file-upload': 'FileUpload'
 };
 class AppRouter extends Component {
 
@@ -29,6 +32,7 @@ class AppRouter extends Component {
                 { id: '/video', iconType: 'video-camera', path: '/video', title: '视频教程', exact: false, hasSub: true, component: Video },
                 { id: '/workplace', iconType: 'radar-chart', path: '/workplace', title: '职场技能', exact: false, hasSub: true, component: Workplace },
                 { id: '/todolist', iconType: 'file-text', path: '/todolist', title: 'TodoList', exact: false, hasSub: false, component: TodoList },
+                { id: '/file-upload', iconType: 'cloud-upload', path: '/file-upload', title: 'FileUpload', exact: false, hasSub: false, component: FileUpload },
             ]
         };
         this.toggle = () => {
@@ -40,6 +44,7 @@ class AppRouter extends Component {
         this.location = props.location
         this.pathSnippets = this.location.pathname.split('/').filter(i => i);
         this.curUrl = `/${this.pathSnippets.join('/')}`;
+        document.title = breadcrumbNameMap[`/${this.pathSnippets.join('/')}`] + ' - React App';
         this.extraBreadcrumbItems = this.pathSnippets.map((_, index) => {
             const url = `/${this.pathSnippets.slice(0, index + 1).join('/')}`;
 
@@ -61,6 +66,7 @@ class AppRouter extends Component {
     UNSAFE_componentWillReceiveProps(nextProps) {
         this.location = nextProps.location
         this.pathSnippets = this.location.pathname.split('/').filter(i => i);
+        document.title = breadcrumbNameMap[`/${this.pathSnippets.join('/')}`] + ' - React App';
         this.extraBreadcrumbItems = this.pathSnippets.map((_, index) => {
             const url = `/${this.pathSnippets.slice(0, index + 1).join('/')}`;
 
@@ -81,7 +87,12 @@ class AppRouter extends Component {
             </Breadcrumb.Item>,
         ].concat(this.extraBreadcrumbItems);
     }
+    getConfirmation(message, callback) {
+        const allowTransition = window.confirm(message);
+        callback(allowTransition);
+    }
     render() {
+
         return (
             <Layout className={antStyle['ant-layout']}>
                 <Sider className={antStyle['ant-sider']} trigger={null} collapsible collapsed={this.state.collapsed}>
@@ -146,7 +157,13 @@ class AppRouter extends Component {
                                 {
                                     this.state.routeConfig.map((item) => {
                                         return (
-                                            <Route key={item.id} path={item.path} exact={item.exact} component={item.component} />
+                                            <Route
+                                                key={item.id}
+                                                path={item.path}
+                                                exact={item.exact}
+                                                component={item.component}
+                                                getUserConfirmation={this.getConfirmation}
+                                            />
                                         )
                                     })
                                 }
