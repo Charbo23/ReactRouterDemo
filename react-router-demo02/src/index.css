@@ -59,9 +59,7 @@ li {
     background-color: rgb(205, 224, 245);
 }
 
-.container a:hover {
-    color: #1DA57A;
-}
+
 
 .active-nav {
     color: #1DA57A;
