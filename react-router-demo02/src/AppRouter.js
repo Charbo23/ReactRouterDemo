@@ -112,14 +112,14 @@ class AppRouter extends Component {
             <Layout className={antStyle['ant-layout']}>
                 <Sider className={antStyle['ant-sider']} trigger={null} collapsible collapsed={this.state.collapsed}>
                     <div className={antStyle['logo']}><img src={require('./assets/logo-sidebar.svg')} alt="logo" /></div>
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={[`sub-${this.curUrl}`]} defaultOpenKeys={[`${this.curUrl}`]}>
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys={[`${this.curUrl}`]} defaultOpenKeys={[`parent-${this.curUrl}`]}>
                         {
                             this.state.routeConfig.map((item) => {
                                 if (item.hasSub) {
                                     return (
 
                                         <SubMenu
-                                            key={item.id}
+                                            key={"parent-"+item.id}
                                             title={
                                                 <Fragment>
                                                     <Icon type={item.iconType} />
@@ -127,7 +127,7 @@ class AppRouter extends Component {
                                                 </Fragment>
                                             }
                                         >
-                                            <Menu.Item key={"sub-"+item.id}>
+                                            <Menu.Item key={item.id}>
                                                 <Link to={item.path}>{item.title}</Link>
                                             </Menu.Item>
                                         </SubMenu>
