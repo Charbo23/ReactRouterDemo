@@ -17,6 +17,7 @@
 .ant-layout-header {
     background: #fff;
     padding: 0;
+    z-index: 100;
     // position: fixed;
     // width: 100%;
     // box-shadow: 0 1px 4px rgba(0,21,41,0.08);
@@ -41,7 +42,10 @@
 }
 
 .ant-layout .logo {
-    height: 32px;
-    background: rgba(255, 255, 255, 0.2);
+    height: 36px;
     margin: 16px;
+    text-align: center
+}
+.ant-layout .logo img{
+    height: 100%;
 }

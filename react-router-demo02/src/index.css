@@ -66,9 +66,3 @@ li {
 .active-nav {
     color: #1DA57A;
 }
-.ant-menu-dark .ant-menu-item a {
-    color: rgba(255, 255, 255, 0.65);
-}
-.ant-menu-dark .ant-menu-item-selected a,.ant-menu-dark .ant-menu-item-active a{
-    color: white;
-}

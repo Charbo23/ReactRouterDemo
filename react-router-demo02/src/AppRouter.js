@@ -12,8 +12,8 @@ class AppRouter extends Component {
         collapsed: false,
         routeConfig: [
             { id: 1, iconType: 'home', path: '/', title: '博客首页', exact: true, hasSub: false, component: Index },
-            { id: 2, iconType: 'video-camera', path: '/video', title: '视频教程', exact: true, hasSub: true, component: Video },
-            { id: 3, iconType: 'radar-chart', path: '/workplace', title: '职场技能', exact: true, hasSub: true, component: Workplace },
+            { id: 2, iconType: 'video-camera', path: '/video', title: '视频教程', exact: false, hasSub: false, component: Video },
+            { id: 3, iconType: 'radar-chart', path: '/workplace', title: '职场技能', exact: false, hasSub: false, component: Workplace },
         ]
     };
     toggle = () => {
@@ -57,13 +57,13 @@ class AppRouter extends Component {
 
                 <Layout className={antStyle['ant-layout']}>
                     <Sider className={antStyle['ant-sider']} trigger={null} collapsible collapsed={this.state.collapsed}>
-                        <div className={antStyle['logo']} />
+                        <div className={antStyle['logo']}><img src={require('./assets/logo-sidebar.svg')} alt="logo" /></div>
                         <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} >
                             {
                                 this.state.routeConfig.map((item) => {
-                                    if(item.hasSub){
+                                    if (item.hasSub) {
                                         return (
-                                        
+
                                             <SubMenu
                                                 key={item.id}
                                                 title={
@@ -78,16 +78,18 @@ class AppRouter extends Component {
                                                 </Menu.Item>
                                             </SubMenu>
                                         );
-                                    }else{
+                                    } else {
                                         return (
-                                        
+
                                             <Menu.Item key={item.id}>
+                                                <Link to={item.path} style={{ display: 'inline-block' }}>
                                                     <Icon type={item.iconType} />
-                                                    <span><Link to={item.path} style={{display:'inline-block'}}>{item.title}</Link></span>
+                                                    <span>{item.title}</span>
+                                                </Link>
                                             </Menu.Item>
                                         );
                                     }
-                                    
+
 
                                 })
                             }
