@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import {  Route, Link, withRouter,NavLink } from 'react-router-dom';
+import {  Route, Link, withRouter,NavLink,Switch } from 'react-router-dom';
 import { Layout, Menu, Icon, Breadcrumb } from 'antd';
 import antStyle from './style/antd-style.module.scss';
 import Index from './pages/Index';
@@ -112,7 +112,12 @@ class AppRouter extends Component {
             <Layout className={antStyle['ant-layout']}>
                 <Sider className={antStyle['ant-sider']} trigger={null} collapsible collapsed={this.state.collapsed}>
                     <div className={antStyle['logo']}><img src={require('./assets/logo-sidebar.svg')} alt="logo" /></div>
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={[`${this.curUrl}`]} defaultOpenKeys={[`parent-${this.curUrl}`]}>
+                    <Menu 
+                    theme="dark" 
+                    mode="inline" 
+                    defaultSelectedKeys={[`${this.curUrl}`]}  
+                    defaultOpenKeys={[`parent-${this.curUrl}`]}
+                    >
                         {
                             this.state.routeConfig.map((item) => {
                                 if (item.hasSub) {
@@ -163,6 +168,7 @@ class AppRouter extends Component {
                             {this.breadcrumbItems}
                         </Breadcrumb>
                         <div className={antStyle['ant-layout-content-main']} >
+                            <Switch>
                             {
                                 this.state.routeConfig.map((item) => {
                                     return (
@@ -170,6 +176,8 @@ class AppRouter extends Component {
                                     )
                                 })
                             }
+                            <Route render={()=><h1>Not Found</h1>}></Route>
+                        </Switch>
                         </div>
                     </Content>
                 </Layout>
