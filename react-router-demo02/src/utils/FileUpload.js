@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // Import React FilePond
 import { FilePond, registerPlugin } from "react-filepond";
-import {Row,Col} from 'antd';
+import { Row, Col } from 'antd';
 // Import FilePond styles
 import "filepond/dist/filepond.min.css";
 
@@ -9,10 +9,17 @@ import "filepond/dist/filepond.min.css";
 // Note: These need to be installed separately
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginFileValidateSize  from 'filepond-plugin-file-validate-size';
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 
 // Register the plugins
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+registerPlugin(
+  FilePondPluginImageExifOrientation,
+  FilePondPluginImagePreview,
+  FilePondPluginFileValidateType,
+  FilePondPluginFileValidateSize
+);
 
 // Our app
 class FileUpload extends Component {
@@ -48,39 +55,50 @@ class FileUpload extends Component {
   render() {
     return (
       <Row type='flex' justify='space-around'>
-        <Col  span={11}>
-        {/* Pass FilePond properties as attributes */}
-        <FilePond
-          ref={ref => (this.pond = ref)}
-          files={this.state.files}
-          allowMultiple={true}
-          maxFiles={3}
-          server="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-          // oninit={() => this.handleInit()}
-          onupdatefiles={fileItems => {
-            // Set currently active file objects to this.state
-            this.setState({
-              files: fileItems.map(fileItem => fileItem.file)
-            });
-          }}
-        />
+        <Col span={11}>
+          {/* Pass FilePond properties as attributes */}
+          <FilePond
+            ref={ref => (this.pond = ref)}
+            files={this.state.files}
+            allowMultiple={true}
+            maxFiles={3}
+            server="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            // oninit={() => this.handleInit()}
+            onupdatefiles={fileItems => {
+              // Set currently active file objects to this.state
+              this.setState({
+                files: fileItems.map(fileItem => fileItem.file)
+              });
+            }}
+            maxFileSize='3MB'
+            allowFileTypeValidation={false}
+            acceptedFileTypes={['image/png','image/svg+xml','image/jpeg','application/x-gzip','application/x-zip-compressed']}
+            fileValidateTypeLabelExpectedTypes='Allows {allTypes}'
+            fileValidateTypeLabelExpectedTypesMap={{
+              'image/jpeg': '.jpg',
+              'image/png': '.png',
+              'image/svg+xml': '.svg',
+              'application/x-gzip':'.gz',
+              'application/x-zip-compressed':'.zip'
+            }}
+          />
         </Col>
-        <Col  span={11}>
-       <FilePond
-          ref={ref => (this.pond2 = ref)}
-          files={this.state.files2}
-          allowMultiple={true}
-          maxFiles={3}
-          server="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-          // oninit={() => this.handleInit()}
-          onupdatefiles={fileItems => {
-            // Set currently active file objects to this.state
-            this.setState({
-              files2: fileItems.map(fileItem => fileItem.file)
-            });
-          }}
-        />
-         
+        <Col span={11}>
+          <FilePond
+            ref={ref => (this.pond2 = ref)}
+            files={this.state.files2}
+            allowMultiple={true}
+            maxFiles={3}
+            server="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            // oninit={() => this.handleInit()}
+            onupdatefiles={fileItems => {
+              // Set currently active file objects to this.state
+              this.setState({
+                files2: fileItems.map(fileItem => fileItem.file)
+              });
+            }}
+          />
+
         </Col>
       </Row>
     );

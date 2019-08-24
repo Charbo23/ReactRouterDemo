@@ -44,7 +44,6 @@ class AppRouter extends Component {
         this.location = props.location
         this.pathSnippets = this.location.pathname.split('/').filter(i => i);
         this.curUrl = `/${this.pathSnippets.join('/')}`;
-        document.title = breadcrumbNameMap[`/${this.pathSnippets.join('/')}`] + ' - React App';
         this.extraBreadcrumbItems = this.pathSnippets.map((_, index) => {
             const url = `/${this.pathSnippets.slice(0, index + 1).join('/')}`;
 
@@ -66,7 +65,6 @@ class AppRouter extends Component {
     UNSAFE_componentWillReceiveProps(nextProps) {
         this.location = nextProps.location
         this.pathSnippets = this.location.pathname.split('/').filter(i => i);
-        document.title = breadcrumbNameMap[`/${this.pathSnippets.join('/')}`] + ' - React App';
         this.extraBreadcrumbItems = this.pathSnippets.map((_, index) => {
             const url = `/${this.pathSnippets.slice(0, index + 1).join('/')}`;
 
@@ -80,16 +78,11 @@ class AppRouter extends Component {
             );
 
         });
-
         this.breadcrumbItems = [
             <Breadcrumb.Item key="home">
                 <Link to="/">Home</Link>
             </Breadcrumb.Item>,
         ].concat(this.extraBreadcrumbItems);
-    }
-    getConfirmation(message, callback) {
-        const allowTransition = window.confirm(message);
-        callback(allowTransition);
     }
     render() {
 
@@ -155,14 +148,16 @@ class AppRouter extends Component {
                         <div className={antStyle['ant-layout-content-main']} >
                             <Switch>
                                 {
-                                    this.state.routeConfig.map((item) => {
+                                    this.state.routeConfig.map((item) => {                     
                                         return (
                                             <Route
                                                 key={item.id}
                                                 path={item.path}
                                                 exact={item.exact}
-                                                component={item.component}
-                                                getUserConfirmation={this.getConfirmation}
+                                                render={()=>{
+                                                    document.title=`${item.title} - React App`;
+                                                    return React.createElement(item.component);
+                                                }}
                                             />
                                         )
                                     })
