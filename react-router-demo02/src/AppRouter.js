@@ -1,12 +1,13 @@
 import React, { Component, Fragment } from 'react';
-import { Route, Link, withRouter, Switch } from 'react-router-dom';
-import { Layout, Menu, Icon, Breadcrumb } from 'antd';
+import { Route, Link, Switch,withRouter } from 'react-router-dom';
+import { Layout, Menu, Icon } from 'antd';
 import antStyle from './style/antd-style.module.scss';
 import Index from './pages/Index';
 import Video from './pages/Video';
 import Workplace from './pages/Workplace';
 import TodoList from './TodoList';
 import FileUpload from './utils/FileUpload';
+import BreadCrumbWithRouter from './utils/BreadCrumbWithRouter';
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 const breadcrumbNameMap = {
@@ -18,11 +19,15 @@ const breadcrumbNameMap = {
     '/video/flutter': 'Flutter',
     '/workplace/get-up': 'GetUp',
     '/workplace/salary': 'Salary',
-    '/todolist': 'TodoList',
+    '/todo-list': 'TodoList',
     '/file-upload': 'FileUpload'
 };
 class AppRouter extends Component {
-
+    updateCurUrl=(curUrl)=>{
+        const { location } = this.props;
+        const pathSnippets = location.pathname.split('/').filter(i => i);
+        this.curUrl=`/${pathSnippets.join('/')}`;
+    }
     constructor(props) {
         super(props);
         this.state = {
@@ -31,7 +36,7 @@ class AppRouter extends Component {
                 { id: '/', iconType: 'home', path: '/', title: '博客首页', exact: true, hasSub: false, component: Index },
                 { id: '/video', iconType: 'video-camera', path: '/video', title: '视频教程', exact: false, hasSub: true, component: Video },
                 { id: '/workplace', iconType: 'radar-chart', path: '/workplace', title: '职场技能', exact: false, hasSub: true, component: Workplace },
-                { id: '/todolist', iconType: 'file-text', path: '/todolist', title: 'TodoList', exact: false, hasSub: false, component: TodoList },
+                { id: '/todo-list', iconType: 'file-text', path: '/todo-list', title: 'TodoList', exact: false, hasSub: false, component: TodoList },
                 { id: '/file-upload', iconType: 'cloud-upload', path: '/file-upload', title: 'FileUpload', exact: false, hasSub: false, component: FileUpload },
             ]
         };
@@ -41,51 +46,53 @@ class AppRouter extends Component {
             });
         };
 
-        this.location = props.location
-        this.pathSnippets = this.location.pathname.split('/').filter(i => i);
-        this.curUrl = `/${this.pathSnippets.join('/')}`;
-        this.extraBreadcrumbItems = this.pathSnippets.map((_, index) => {
-            const url = `/${this.pathSnippets.slice(0, index + 1).join('/')}`;
-
-            // if(!breadcrumbNameMap[url]){
-            //     return null;
-            // }
-            return (
-                <Breadcrumb.Item key={url}>
-                    <Link to={url}>{breadcrumbNameMap[url]}</Link>
-                </Breadcrumb.Item>
-            );
-        });
-        this.breadcrumbItems = [
-            <Breadcrumb.Item key="home">
-                <Link to="/">Home</Link>
-            </Breadcrumb.Item>,
-        ].concat(this.extraBreadcrumbItems);
+       
     }
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        this.location = nextProps.location
-        this.pathSnippets = this.location.pathname.split('/').filter(i => i);
-        this.extraBreadcrumbItems = this.pathSnippets.map((_, index) => {
-            const url = `/${this.pathSnippets.slice(0, index + 1).join('/')}`;
-
-            // if(!breadcrumbNameMap[url]){
-            //     return null;
-            // }
+    
+    renderLink(item) {
+        if (item.hasSub) {
             return (
-                <Breadcrumb.Item key={url}>
-                    <Link to={url}>{breadcrumbNameMap[url]}</Link>
-                </Breadcrumb.Item>
+                <SubMenu
+                    key={"parent-" + item.id}
+                    title={
+                        <Fragment>
+                            <Icon type={item.iconType} />
+                            <span>{item.title}</span>
+                        </Fragment>
+                    }
+                >
+                    <Menu.Item key={item.id}>
+                        <Link to={item.path}>{item.title}</Link>
+                    </Menu.Item>
+                </SubMenu>
             );
+        } else {
+            return (
 
-        });
-        this.breadcrumbItems = [
-            <Breadcrumb.Item key="home">
-                <Link to="/">Home</Link>
-            </Breadcrumb.Item>,
-        ].concat(this.extraBreadcrumbItems);
+                <Menu.Item key={item.id}>
+                    <Link to={item.path}>
+                        <Icon type={item.iconType} />
+                        <span>{item.title}</span>
+                    </Link>
+                </Menu.Item>
+            );
+        }
+    }
+    renderRoute(item) {
+        return (
+            <Route
+                key={item.id}
+                path={item.path}
+                exact={item.exact}
+                render={() => {
+                    document.title = `${item.title} | React App`;
+                    return React.createElement(item.component);
+                }}
+            />
+        )
     }
     render() {
-
+        this.updateCurUrl();
         return (
             <Layout className={antStyle['ant-layout']}>
                 <Sider className={antStyle['ant-sider']} trigger={null} collapsible collapsed={this.state.collapsed}>
@@ -96,38 +103,7 @@ class AppRouter extends Component {
                         defaultSelectedKeys={[`${this.curUrl}`]}
                         defaultOpenKeys={[`parent-${this.curUrl}`]}
                     >
-                        {
-                            this.state.routeConfig.map((item) => {
-                                if (item.hasSub) {
-                                    return (
-
-                                        <SubMenu
-                                            key={"parent-" + item.id}
-                                            title={
-                                                <Fragment>
-                                                    <Icon type={item.iconType} />
-                                                    <span>{item.title}</span>
-                                                </Fragment>
-                                            }
-                                        >
-                                            <Menu.Item key={item.id}>
-                                                <Link to={item.path}>{item.title}</Link>
-                                            </Menu.Item>
-                                        </SubMenu>
-                                    );
-                                } else {
-                                    return (
-
-                                        <Menu.Item key={item.id}>
-                                            <Link to={item.path}>
-                                                <Icon type={item.iconType} />
-                                                <span>{item.title}</span>
-                                            </Link>
-                                        </Menu.Item>
-                                    );
-                                }
-                            })
-                        }
+                        {this.state.routeConfig.map(this.renderLink)}
                     </Menu>
                 </Sider>
                 <Layout className={antStyle['ant-main-layout']}>
@@ -142,26 +118,13 @@ class AppRouter extends Component {
                     <Content
                         className={antStyle['ant-layout-content']}
                     >
-                        <Breadcrumb style={{ margin: '16px 20px 0px' }}>
-                            {this.breadcrumbItems}
-                        </Breadcrumb>
+                        <BreadCrumbWithRouter
+                            breadcrumbNameMap={breadcrumbNameMap}
+                        />
+                        
                         <div className={antStyle['ant-layout-content-main']} >
                             <Switch>
-                                {
-                                    this.state.routeConfig.map((item) => {                     
-                                        return (
-                                            <Route
-                                                key={item.id}
-                                                path={item.path}
-                                                exact={item.exact}
-                                                render={()=>{
-                                                    document.title=`${item.title} - React App`;
-                                                    return React.createElement(item.component);
-                                                }}
-                                            />
-                                        )
-                                    })
-                                }
+                                {this.state.routeConfig.map(this.renderRoute)}
                                 <Route render={() => <h1>Not Found</h1>}></Route>
                             </Switch>
                         </div>
