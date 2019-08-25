@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Route, Link, Switch,withRouter } from 'react-router-dom';
+import { Route, Link, Switch, withRouter } from 'react-router-dom';
 import { Layout, Menu, Icon } from 'antd';
 import antStyle from './style/antd-style.module.scss';
 import Index from './pages/Index';
@@ -8,6 +8,7 @@ import Workplace from './pages/Workplace';
 import TodoList from './TodoList';
 import FileUpload from './utils/FileUpload';
 import BreadCrumbWithRouter from './utils/BreadCrumbWithRouter';
+import MyBreadCrumb from './utils/MyBreadCrumb';
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 const breadcrumbNameMap = {
@@ -23,10 +24,10 @@ const breadcrumbNameMap = {
     '/file-upload': 'FileUpload'
 };
 class AppRouter extends Component {
-    updateCurUrl=(curUrl)=>{
+    updateCurUrl = (curUrl) => {
         const { location } = this.props;
         const pathSnippets = location.pathname.split('/').filter(i => i);
-        this.curUrl=`/${pathSnippets.join('/')}`;
+        this.curUrl = `/${pathSnippets.join('/')}`;
     }
     constructor(props) {
         super(props);
@@ -46,9 +47,9 @@ class AppRouter extends Component {
             });
         };
 
-       
+
     }
-    
+
     renderLink(item) {
         if (item.hasSub) {
             return (
@@ -120,8 +121,11 @@ class AppRouter extends Component {
                     >
                         <BreadCrumbWithRouter
                             breadcrumbNameMap={breadcrumbNameMap}
+                            className={antStyle['ant-breadcrumb']}
                         />
-                        
+                        <MyBreadCrumb
+                            className={antStyle['ant-breadcrumb']}
+                        />
                         <div className={antStyle['ant-layout-content-main']} >
                             <Switch>
                                 {this.state.routeConfig.map(this.renderRoute)}

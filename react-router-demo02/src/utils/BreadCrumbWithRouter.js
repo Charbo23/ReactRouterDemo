@@ -19,7 +19,7 @@ const BreadCrumbWithRouter = (props) => {
     ].concat(extraBreadcrumbItems);
     return (
         
-        <Breadcrumb style={{ margin: '16px 20px 0px' }}>
+        <Breadcrumb className={props.className}>
             {breadcrumbItems}
         </Breadcrumb>
     )

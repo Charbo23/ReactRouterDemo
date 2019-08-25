@@ -28,7 +28,9 @@
 .ant-layout-content {
     display: flex;
     flex-direction: column;
-    
+    .ant-breadcrumb{
+        margin: 16px 20px 0;
+    }
     .ant-layout-content-main{
         flex: auto;
         margin: 16px 20px 24px;
