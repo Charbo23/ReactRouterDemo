@@ -7,22 +7,10 @@ import Video from './pages/Video';
 import Workplace from './pages/Workplace';
 import TodoList from './TodoList';
 import FileUpload from './utils/FileUpload';
-import BreadCrumbWithRouter from './utils/BreadCrumbWithRouter';
 import MyBreadCrumb from './utils/MyBreadCrumb';
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
-const breadcrumbNameMap = {
-    '/': 'Home',
-    '/video': 'Video',
-    '/workplace': 'Workplace',
-    '/video/react-page': 'React',
-    '/video/vue': 'Vue',
-    '/video/flutter': 'Flutter',
-    '/workplace/get-up': 'GetUp',
-    '/workplace/salary': 'Salary',
-    '/todo-list': 'TodoList',
-    '/file-upload': 'FileUpload'
-};
+
 class AppRouter extends Component {
     updateCurUrl = (curUrl) => {
         const { location } = this.props;
@@ -37,8 +25,8 @@ class AppRouter extends Component {
                 { id: '/', iconType: 'home', path: '/', title: '博客首页', exact: true, hasSub: false, component: Index },
                 { id: '/video', iconType: 'video-camera', path: '/video', title: '视频教程', exact: false, hasSub: true, component: Video },
                 { id: '/workplace', iconType: 'radar-chart', path: '/workplace', title: '职场技能', exact: false, hasSub: true, component: Workplace },
-                { id: '/todo-list', iconType: 'file-text', path: '/todo-list', title: 'TodoList', exact: false, hasSub: false, component: TodoList },
-                { id: '/file-upload', iconType: 'cloud-upload', path: '/file-upload', title: 'FileUpload', exact: false, hasSub: false, component: FileUpload },
+                { id: '/todo-list', iconType: 'file-text', path: '/todo-list', title: '待办事项', exact: false, hasSub: false, component: TodoList },
+                { id: '/file-upload', iconType: 'cloud-upload', path: '/file-upload', title: '文件上传', exact: false, hasSub: false, component: FileUpload },
             ]
         };
         this.toggle = () => {
@@ -119,10 +107,9 @@ class AppRouter extends Component {
                     <Content
                         className={antStyle['ant-layout-content']}
                     >
-                        <BreadCrumbWithRouter
-                            breadcrumbNameMap={breadcrumbNameMap}
+                        {/* <BreadCrumbWithRouter
                             className={antStyle['ant-breadcrumb']}
-                        />
+                        /> */}
                         <MyBreadCrumb
                             className={antStyle['ant-breadcrumb']}
                         />

@@ -1,6 +1,18 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { Breadcrumb } from 'antd';
+const breadcrumbNameMap = {
+    '/': 'Home',
+    '/video': 'Video',
+    '/workplace': 'Workplace',
+    '/video/react-page': 'React',
+    '/video/vue': 'Vue',
+    '/video/flutter': 'Flutter',
+    '/workplace/get-up': 'GetUp',
+    '/workplace/salary': 'Salary',
+    '/todo-list': 'TodoList',
+    '/file-upload': 'FileUpload'
+};
 const BreadCrumbWithRouter = (props) => {
     const { location } = props;
     const pathSnippets = location.pathname.split('/').filter(i => i);
@@ -8,7 +20,7 @@ const BreadCrumbWithRouter = (props) => {
         const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
         return (
             <Breadcrumb.Item key={url}>
-                <Link to={url}>{props.breadcrumbNameMap[url]}</Link>
+                <Link to={url}>{breadcrumbNameMap[url]}</Link>
             </Breadcrumb.Item>
         );
     });

@@ -1,10 +1,12 @@
 .ant-input {
     max-width: 85%;
 }
-.ant-input + .ant-btn{
+
+.ant-input+.ant-btn {
     margin-left: .6rem;
-    
+
 }
+
 .ant-main-layout {
     min-height: 100vh;
     // margin-left: 200px;
@@ -28,44 +30,54 @@
 .ant-layout-content {
     display: flex;
     flex-direction: column;
-    .ant-breadcrumb{
+
+    .ant-breadcrumb {
         margin: 16px 20px 0;
     }
-    .ant-layout-content-main{
+
+    .ant-layout-content-main {
         flex: auto;
         margin: 16px 20px 24px;
         padding: 24px;
         background: #fff;
+
         a:hover {
             color: #1DA57A
         }
-        h1{
+
+        h1 {
             font-size: 24px;
         }
     }
-    
+
 }
 
-.ant-layout{
+.ant-layout {
     .trigger {
         font-size: 18px;
         line-height: 64px;
         padding: 0 24px;
         cursor: pointer;
         transition: color 0.3s;
-        &:hover{
+
+        &:hover {
 
             color: #1890ff;
         }
     }
+
     .logo {
         height: 36px;
         margin: 16px;
         text-align: center;
+
         img {
             height: 100%;
         }
     }
-} 
+}
 
 
+:global(.last-breadcrumb) span {
+   color:  rgba(0, 0, 0, 0.65)
+}
