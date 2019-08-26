@@ -8,6 +8,8 @@ import Workplace from './pages/Workplace';
 import TodoList from './TodoList';
 import FileUpload from './utils/FileUpload';
 import MyBreadCrumb from './utils/MyBreadCrumb';
+import { renderRoutes } from 'react-router-config'
+import routes from './pages/config/routeConfig';
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 
@@ -115,7 +117,8 @@ class AppRouter extends Component {
                         />
                         <div className={antStyle['ant-layout-content-main']} >
                             <Switch>
-                                {this.state.routeConfig.map(this.renderRoute)}
+                                {/* {this.state.routeConfig.map(this.renderRoute)} */}
+                                {renderRoutes(routes)}
                                 <Route render={() => <h1>Not Found</h1>}></Route>
                             </Switch>
                         </div>
