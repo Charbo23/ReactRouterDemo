@@ -36,10 +36,12 @@
     }
 
     .ant-layout-content-main {
+
         flex: auto;
         margin: 16px 20px 24px;
         padding: 24px;
         background: #fff;
+        min-height: calc(100vh - 145px);
 
         a:hover {
             color: #1DA57A
@@ -79,5 +81,5 @@
 
 
 :global(.last-breadcrumb) span {
-   color:  rgba(0, 0, 0, 0.65)
+    color: rgba(0, 0, 0, 0.65)
 }

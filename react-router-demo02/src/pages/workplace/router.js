@@ -1,5 +1,5 @@
 import asyncComponent from '@/pages/config/AsyncComponent';
-const Workplace = asyncComponent(() => import('../Workplace'));
+const Workplace = asyncComponent(() => import('./Workplace'));
 const GetUp = asyncComponent(() => import('./GetUp'));
 const Salary = asyncComponent(() => import('./Salary'));
 const routes=[

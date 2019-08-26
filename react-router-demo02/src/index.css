@@ -61,3 +61,29 @@ li {
 .active-nav {
     color: #1DA57A;
 }
+
+.page-content-enter {
+    opacity: 0;
+}
+
+.page-content-enter-active {
+    opacity: 1;
+    transition: opacity .5s ease-in-out;
+}
+
+.page-content-enter-done {
+    opacity: 1;
+}
+
+.page-content-exit {
+    opacity: 1;
+}
+
+.page-content-exit-active {
+    opacity: 0;
+    transition: opacity .5s ease-in-out;
+}
+
+.page-content-exit-done {
+    opacity: 0;
+}

@@ -18,7 +18,6 @@ const routes = [
     {
         path: '/file-upload',
         component: FileUpload
-
     },
     ...exceptionRoutes
 ]

@@ -1,5 +1,5 @@
 import asyncComponent from '@/pages/config/AsyncComponent';
-const Video = asyncComponent(() => import('../Video'));
+const Video = asyncComponent(() => import('./Video'));
 const ReactPage = asyncComponent(() => import('./ReactPage'));
 const Vue = asyncComponent(() => import('./Vue'));
 const Flutter = asyncComponent(() => import('./Flutter'));
