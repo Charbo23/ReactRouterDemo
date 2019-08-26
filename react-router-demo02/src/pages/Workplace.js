@@ -1,9 +1,7 @@
 import React, { Fragment } from 'react';
-import { Route, NavLink, Switch } from 'react-router-dom';
-import GetUp from './workplace/GetUp';
-import Salary from './workplace/Salary';
-
-function Workplace() {
+import { NavLink, Switch } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config'
+function Workplace(props) {
     return (
         <Fragment>
             <div className="head-nav">
@@ -15,8 +13,7 @@ function Workplace() {
             <div className="workplace-content">
                 <h1>职场软技能</h1>
                 <Switch>
-                    <Route path="/workplace/get-up" component={GetUp}></Route>
-                    <Route path="/workplace/salary" component={Salary}></Route>
+                {renderRoutes(props.route.routes)}
 
                 </Switch>
             </div>

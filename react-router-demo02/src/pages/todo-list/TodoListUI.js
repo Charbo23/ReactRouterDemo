@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Select, InputNumber, DatePicker, Switch, Slider, Input, Button, List, Row, Col } from 'antd';
-import IconText from './utils/IconText';
-import antdStyle from './style/antd-style.module.scss';
+import IconText from '@/utils/IconText';
+import antdStyle from '@/style/antd-style.module.scss';
 const { Option } = Select;
 const TodoListUI = (props) => {
     const { loading, inputValue, changeInput, list, addItem, deleteItem } = props;

@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import TodoListUI from './TodoListUI';
-import actions from './store/actionCreators';
+import actions from '@/store/actionCreators';
 class TodoList extends Component {
     componentDidMount() {
         this.props.initList();

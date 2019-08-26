@@ -1,10 +1,8 @@
 import React,{Fragment} from 'react';
-import { Route, NavLink, Switch } from 'react-router-dom';
-import ReactPage from './video/ReactPage';
-import Vue from './video/Vue';
-import Flutter from './video/Flutter';
+import { NavLink, Switch } from 'react-router-dom';
 
-function Video() {
+import { renderRoutes } from 'react-router-config'
+function Video(props) {
     return (
         <Fragment>
             <div className="head-nav">
@@ -16,10 +14,7 @@ function Video() {
             </div>
             <div className="video-content">
                 <Switch>
-                    <Route path="/video/react-page" component={ReactPage}></Route>
-                    <Route path="/video/vue" component={Vue}></Route>
-                    <Route path="/video/flutter" component={Flutter}></Route>
-                    <Route path="/video"  component={ReactPage}></Route>
+                    {renderRoutes(props.route.routes)}
                 </Switch>
             </div>
         </Fragment>

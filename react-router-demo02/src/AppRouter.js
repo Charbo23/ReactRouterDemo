@@ -2,14 +2,10 @@ import React, { Component, Fragment } from 'react';
 import { Route, Link, Switch, withRouter } from 'react-router-dom';
 import { Layout, Menu, Icon } from 'antd';
 import antStyle from './style/antd-style.module.scss';
-import Index from './pages/Index';
-import Video from './pages/Video';
-import Workplace from './pages/Workplace';
-import TodoList from './TodoList';
-import FileUpload from './utils/FileUpload';
 import MyBreadCrumb from './utils/MyBreadCrumb';
 import { renderRoutes } from 'react-router-config'
-import routes from './pages/config/routeConfig';
+import routes from './pages/indexRouter';
+
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 
@@ -24,11 +20,11 @@ class AppRouter extends Component {
         this.state = {
             collapsed: false,
             routeConfig: [
-                { id: '/', iconType: 'home', path: '/', title: '博客首页', exact: true, hasSub: false, component: Index },
-                { id: '/video', iconType: 'video-camera', path: '/video', title: '视频教程', exact: false, hasSub: true, component: Video },
-                { id: '/workplace', iconType: 'radar-chart', path: '/workplace', title: '职场技能', exact: false, hasSub: true, component: Workplace },
-                { id: '/todo-list', iconType: 'file-text', path: '/todo-list', title: '待办事项', exact: false, hasSub: false, component: TodoList },
-                { id: '/file-upload', iconType: 'cloud-upload', path: '/file-upload', title: '文件上传', exact: false, hasSub: false, component: FileUpload },
+                { id: '/', iconType: 'home', path: '/', title: '博客首页', exact: true, hasSub: false},
+                { id: '/video', iconType: 'video-camera', path: '/video', title: '视频教程', exact: false, hasSub: true },
+                { id: '/workplace', iconType: 'radar-chart', path: '/workplace', title: '职场技能', exact: false, hasSub: true},
+                { id: '/todo-list', iconType: 'file-text', path: '/todo-list', title: '待办事项', exact: false, hasSub: false},
+                { id: '/file-upload', iconType: 'cloud-upload', path: '/file-upload', title: '文件上传', exact: false, hasSub: false },
             ]
         };
         this.toggle = () => {
@@ -119,7 +115,6 @@ class AppRouter extends Component {
                             <Switch>
                                 {/* {this.state.routeConfig.map(this.renderRoute)} */}
                                 {renderRoutes(routes)}
-                                <Route render={() => <h1>Not Found</h1>}></Route>
                             </Switch>
                         </div>
                     </Content>
