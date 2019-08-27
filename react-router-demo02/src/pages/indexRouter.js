@@ -3,8 +3,8 @@ import videoRoutes from './video/router';
 import workplaceRoutes from './workplace/router';
 import todoListRoutes from './todo-list/router';
 import exceptionRoutes from './exception/router';
+import FileUpload from '@/utils/FileUpload';
 const Index = asyncComponent(() => import('@/pages/Index'));
-const FileUpload = asyncComponent(() => import('@/utils/FileUpload'));
 
 const routes = [
     {
