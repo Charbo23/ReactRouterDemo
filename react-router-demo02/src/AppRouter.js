@@ -6,66 +6,74 @@ import MyBreadCrumb from './utils/MyBreadCrumb';
 import { renderRoutes } from 'react-router-config'
 import routes from './pages/indexRouter';
 // import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import treeMenu from './pages/config/treeMenu';
+import { connect } from 'react-redux';
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 
 class AppRouter extends Component {
-    updateCurUrl = (curUrl) => {
-        const { location } = this.props;
-        const pathSnippets = location.pathname.split('/').filter(i => i);
-        this.curUrl = `/${pathSnippets.join('/')}`;
+    updateCurUrl = (props) => {
+        const { location } = props;
+        let curUrl = location.pathname;
+
+        this.updateCurTitle(treeMenu, curUrl);
+    }
+    updateCurTitle = (tree, curUrl, parentId) => {
+        return tree.some(item => {
+            if (item.children) {
+                return this.updateCurTitle(item.children, curUrl, item.id);
+            } else {
+                if (item.path === curUrl) {
+                    document.title = `${item.title} | React App`;
+                    let curId = item.id;
+                    this.curId = curId;
+                    this.openId = parentId;
+                    return true;
+                }
+            }
+            return false;
+        })
     }
     constructor(props) {
         super(props);
         this.state = {
             collapsed: false,
-            routeConfig: [
-                { id: '/', iconType: 'home', path: '/', title: '博客首页', exact: true, hasSub: false },
-                { id: '/video', iconType: 'video-camera', path: '/video', title: '视频教程', exact: false, hasSub: true },
-                { id: '/workplace', iconType: 'radar-chart', path: '/workplace', title: '职场技能', exact: false, hasSub: true },
-                { id: '/todo-list', iconType: 'file-text', path: '/todo-list', title: '待办事项', exact: false, hasSub: false },
-                { id: '/file-upload', iconType: 'cloud-upload', path: '/file-upload', title: '文件上传', exact: false, hasSub: false },
-            ]
         };
-        this.toggle = () => {
-            this.setState({
-                collapsed: !this.state.collapsed,
-            });
-        };
-
-
     }
-
-    renderLink(item) {
-        if (item.hasSub) {
-            return (
-                <SubMenu
-                    key={"parent-" + item.id}
-                    title={
-                        <Fragment>
-                            <Icon type={item.iconType} />
-                            <span>{item.title}</span>
-                        </Fragment>
-                    }
-                >
+    toggle = () => {
+        this.setState({
+            collapsed: !this.state.collapsed,
+        });
+    };
+    renderLink = (tree) => {
+        return tree.map(item => {
+            if (item.children) {
+                return (
+                    <SubMenu
+                        key={item.id}
+                        title={
+                            <Fragment>
+                                <Icon type={item.icon} />
+                                <span>{item.title}</span>
+                            </Fragment>
+                        }
+                    >
+                        {this.renderLink(item.children)}
+                    </SubMenu>
+                );
+            } else {
+                return (
                     <Menu.Item key={item.id}>
-                        <Link to={item.path}>{item.title}</Link>
+                        <Link to={item.path} onClick={this.handleClick}>
+                            {item.icon ? <Icon type={item.icon} /> : ''}
+                            <span>{item.title}</span>
+                        </Link>
                     </Menu.Item>
-                </SubMenu>
-            );
-        } else {
-            return (
-
-                <Menu.Item key={item.id}>
-                    <Link to={item.path}>
-                        <Icon type={item.iconType} />
-                        <span>{item.title}</span>
-                    </Link>
-                </Menu.Item>
-            );
-        }
+                );
+            }
+        })
     }
-    renderRoute(item) {
+    renderRoute = (item) => {
         return (
             <Route
                 key={item.id}
@@ -78,8 +86,18 @@ class AppRouter extends Component {
             />
         )
     }
+    handleClick = () => {
+        // console.log(this.props);
+    }
+    // UNSAFE_componentWillReceiveProps(nextProps){
+    //     this.updateCurUrl(nextProps);
+    // }
+    // componentDidMount(){
+    //     console.log('mount');
+    //     this.updateCurUrl(this.props);
+    // }
     render() {
-        this.updateCurUrl();
+        this.updateCurUrl(this.props);
         return (
             <Layout className={antStyle['ant-layout']}>
                 <Sider className={antStyle['ant-sider']} trigger={null} collapsible collapsed={this.state.collapsed}>
@@ -87,10 +105,10 @@ class AppRouter extends Component {
                     <Menu
                         theme="dark"
                         mode="inline"
-                        defaultSelectedKeys={[`${this.curUrl}`]}
-                        defaultOpenKeys={[`parent-${this.curUrl}`]}
+                        defaultSelectedKeys={[this.curId + '']}
+                        defaultOpenKeys={[this.openId + '']}
                     >
-                        {this.state.routeConfig.map(this.renderLink)}
+                        {this.renderLink(treeMenu)}
                     </Menu>
                 </Sider>
                 <Layout className={antStyle['ant-main-layout']}>
@@ -109,23 +127,23 @@ class AppRouter extends Component {
                         > */}
 
 
-                            <Content
-                                className={antStyle['ant-layout-content']}
-                            >
-                                {/* <BreadCrumbWithRouter
+                    <Content
+                        className={antStyle['ant-layout-content']}
+                    >
+                        {/* <BreadCrumbWithRouter
                             className={antStyle['ant-breadcrumb']}
                         /> */}
-                                <MyBreadCrumb
-                                    className={antStyle['ant-breadcrumb']}
-                                />
-                                <div className={antStyle['ant-layout-content-main']} >
-                                    <Switch>
-                                        {/* {this.state.routeConfig.map(this.renderRoute)} */}
-                                        {renderRoutes(routes)}
-                                    </Switch>
-                                </div>
-                            </Content>
-                        {/* </CSSTransition>
+                        <MyBreadCrumb
+                            className={antStyle['ant-breadcrumb']}
+                        />
+                        <div className={antStyle['ant-layout-content-main']} >
+                            <Switch>
+                                {/* {this.state.routeConfig.map(this.renderRoute)} */}
+                                {renderRoutes(routes)}
+                            </Switch>
+                        </div>
+                    </Content>
+                    {/* </CSSTransition>
                     </TransitionGroup> */}
                 </Layout>
             </Layout>
@@ -133,5 +151,12 @@ class AppRouter extends Component {
         )
     }
 }
+const mapStateToProps = (state) => ({
+    curTitle: state.curTitle
+});
+const mapDispatchToProps = (dispatch) => ({
+    changeTitle() {
 
-export default withRouter(AppRouter);
+    }
+});
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AppRouter));
