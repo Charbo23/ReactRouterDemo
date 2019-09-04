@@ -10,7 +10,7 @@ import "filepond/dist/filepond.min.css";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-import FilePondPluginFileValidateSize  from 'filepond-plugin-file-validate-size';
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 
 // Register the plugins
@@ -72,14 +72,14 @@ class FileUpload extends Component {
             }}
             maxFileSize='3MB'
             allowFileTypeValidation={false}
-            acceptedFileTypes={['image/png','image/svg+xml','image/jpeg','application/x-gzip','application/x-zip-compressed']}
+            acceptedFileTypes={['image/png', 'image/svg+xml', 'image/jpeg', 'application/x-gzip', 'application/x-zip-compressed']}
             fileValidateTypeLabelExpectedTypes='Allows {allTypes}'
             fileValidateTypeLabelExpectedTypesMap={{
               'image/jpeg': '.jpg',
               'image/png': '.png',
               'image/svg+xml': '.svg',
-              'application/x-gzip':'.gz',
-              'application/x-zip-compressed':'.zip'
+              'application/x-gzip': '.gz',
+              'application/x-zip-compressed': '.zip'
             }}
           />
         </Col>

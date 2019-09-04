@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Route, Link, Switch, withRouter } from 'react-router-dom';
+import { Link, Switch, withRouter } from 'react-router-dom';
 import { Layout, Menu, Icon } from 'antd';
 import antStyle from './style/antd-style.module.scss';
 import MyBreadCrumb from './utils/MyBreadCrumb';
@@ -7,7 +7,6 @@ import { renderRoutes } from 'react-router-config'
 import routes from './pages/indexRouter';
 // import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import treeMenu from './pages/config/treeMenu';
-import { connect } from 'react-redux';
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 
@@ -15,7 +14,6 @@ class AppRouter extends Component {
     updateCurUrl = (props) => {
         const { location } = props;
         let curUrl = location.pathname;
-
         this.updateCurTitle(treeMenu, curUrl);
     }
     updateCurTitle = (tree, curUrl, parentId) => {
@@ -64,7 +62,7 @@ class AppRouter extends Component {
             } else {
                 return (
                     <Menu.Item key={item.id}>
-                        <Link to={item.path} onClick={this.handleClick}>
+                        <Link to={item.path}>
                             {item.icon ? <Icon type={item.icon} /> : ''}
                             <span>{item.title}</span>
                         </Link>
@@ -73,29 +71,20 @@ class AppRouter extends Component {
             }
         })
     }
-    renderRoute = (item) => {
-        return (
-            <Route
-                key={item.id}
-                path={item.path}
-                exact={item.exact}
-                render={() => {
-                    document.title = `${item.title} | React App`;
-                    return React.createElement(item.component);
-                }}
-            />
-        )
-    }
-    handleClick = () => {
-        // console.log(this.props);
-    }
-    // UNSAFE_componentWillReceiveProps(nextProps){
-    //     this.updateCurUrl(nextProps);
+    // renderRoute = (item) => {
+    //     return (
+    //         <Route
+    //             key={item.id}
+    //             path={item.path}
+    //             exact={item.exact}
+    //             render={() => {
+    //                 document.title = `${item.title} | React App`;
+    //                 return React.createElement(item.component);
+    //             }}
+    //         />
+    //     )
     // }
-    // componentDidMount(){
-    //     console.log('mount');
-    //     this.updateCurUrl(this.props);
-    // }
+   
     render() {
         this.updateCurUrl(this.props);
         return (
@@ -151,12 +140,5 @@ class AppRouter extends Component {
         )
     }
 }
-const mapStateToProps = (state) => ({
-    curTitle: state.curTitle
-});
-const mapDispatchToProps = (dispatch) => ({
-    changeTitle() {
 
-    }
-});
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AppRouter));
+export default withRouter(AppRouter);

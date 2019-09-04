@@ -17,7 +17,7 @@ const defaultState = {
         //     "value": "晚5点半对今日代码进行review"
         // }
     ],
-    loading: true
+    loading: false
 };
 export default (state = defaultState, action) => {
     //Reducer里只能接收state不能改变state

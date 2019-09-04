@@ -6,6 +6,9 @@ class TodoList extends Component {
     componentDidMount() {
         this.props.initList();
     }
+    componentWillUnmount(){
+        console.log('123');
+    }
     render() {
         const { loading, inputValue, changeInput, list, addItem, deleteItem } = this.props;
         return (
